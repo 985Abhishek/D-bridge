@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Verify Vendors - D-Bridge</title>
+  <style>
+    :root {
+      --primary: #4b7bec;
+      --primary-dark: #3867d6;
+        --highlight: #20bf6b;
+        --highlight-dark: #0fb55a;
+      --light: #ecf0f1;
+      --danger: #e74c3c;
+      --success: #2ecc71;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--light);
+    }
+
+    .dashboard {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: var(--primary);
+      color: white;
+      padding: 2rem 1rem;
+      width: 260px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 2rem;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: white;
+      padding: 0.6rem;
+      margin-bottom: 0.5rem;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover, .sidebar a.active {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .content {
+      flex: 1;
+      padding: 2rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+      }
+
+      .sidebar a {
+        margin-right: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <nav class="sidebar">
+      <h2>Admin Panel</h2>
+      <a href="AdminDashboard.html">Overview</a>
+      <a href="AdminVerifyVendors.html" class="active">Verify Vendors</a>
+      <a href="AdminUserManagement.html">User Management</a>
+      <a href="AdminAnalytics.html">Analytics</a>
+      <a href="AdminSystemLogs.html">System Logs</a>
+      <a href="Login.html">Logout</a>
+    </nav>
+    <main class="content">
+      <div class="header">
+        <h1>Vendor Verification</h1>
+        <p>Today: <strong id="current-date"></strong></p>
+      </div>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Vendor ID</th>
+            <th>Business Name</th>
+            <th>Owner</th>
+            <th>Submitted</th>
+            <th>Documents</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>V-2025-001</td>
+            <td>Handmade Crafts Co.</td>
+            <td>Maria Johnson</td>
+            <td>Apr 18, 2025</td>
+            <td><a href="#">View Files</a></td>
+            <td>
+              <button class="btn btn-success">Approve</button>
+              <button class="btn btn-danger">Reject</button>
+            </td>
+          </tr>
+          <tr>
+            <td>V-2025-002</td>
+            <td>Organic Foods LLC</td>
+            <td>James Wilson</td>
+            <td>Apr 19, 2025</td>
+            <td><a href="#">View Files</a></td>
+            <td>
+              <button class="btn btn-success">Approve</button>
+              <button class="btn btn-danger">Reject</button>
+            </td>
+          </tr>
+          <tr>
+            <td>V-2025-003</td>
+            <td>Artisan Jewelry</td>
+            <td>Sarah Miller</td>
+            <td>Apr 20, 2025</td>
+            <td><a href="#">View Files</a></td>
+            <td>
+              <button class="btn btn-success">Approve</button>
+              <button class="btn btn-danger">Reject</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </div>
+
+  <script>
+    const today = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('current-date').textContent = today.toLocaleDateString('en-US', options);
+    
+    // Load pending vendors from localStorage
+    function loadPendingVendors() {
+      const pendingVendors = JSON.parse(localStorage.getItem("pendingVendors") || "[]");
+      const tableBody = document.querySelector("tbody");
+      tableBody.innerHTML = "";
+      
+      if (pendingVendors.length === 0) {
+        const row = document.createElement("tr");
+        row.innerHTML = `<td colspan="6" style="text-align: center;">No pending vendor applications</td>`;
+        tableBody.appendChild(row);
+        return;
+      }
+      
+      pendingVendors.forEach(vendor => {
+        const submittedDate = new Date(vendor.submittedDate);
+        const formattedDate = submittedDate.toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric'
+        });
+        
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${vendor.id}</td>
+          <td>${vendor.businessName}</td>
+          <td>${vendor.name}</td>
+          <td>${formattedDate}</td>
+          <td><a href="#">View Files</a></td>
+          <td>
+            <button class="btn btn-success" onclick="approveVendor('${vendor.email}')">Approve</button>
+            <button class="btn btn-danger" onclick="rejectVendor('${vendor.email}')">Reject</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+    
+    // Approve vendor function
+    function approveVendor(email) {
+      const pendingVendors = JSON.parse(localStorage.getItem("pendingVendors") || "[]");
+      const updatedPendingVendors = pendingVendors.filter(vendor => vendor.email !== email);
+      localStorage.setItem("pendingVendors", JSON.stringify(updatedPendingVendors));
+      
+      // Update user status
+      const user = JSON.parse(localStorage.getItem(`user_${email}`));
+      if (user) {
+        user.status = "active";
+        localStorage.setItem(`user_${email}`, JSON.stringify(user));
+      }
+      
+      alert(`Vendor ${email} has been approved.`);
+      loadPendingVendors();
+    }
+    
+    // Reject vendor function
+    function rejectVendor(email) {
+      const pendingVendors = JSON.parse(localStorage.getItem("pendingVendors") || "[]");
+      const updatedPendingVendors = pendingVendors.filter(vendor => vendor.email !== email);
+      localStorage.setItem("pendingVendors", JSON.stringify(updatedPendingVendors));
+      
+      // Update user status
+      const user = JSON.parse(localStorage.getItem(`user_${email}`));
+      if (user) {
+        user.status = "rejected";
+        localStorage.setItem(`user_${email}`, JSON.stringify(user));
+      }
+      
+      alert(`Vendor ${email} has been rejected.`);
+      loadPendingVendors();
+    }
+    
+    // Load vendors when page loads
+    window.addEventListener('DOMContentLoaded', loadPendingVendors);
+  </script>
+</body>
+</html>

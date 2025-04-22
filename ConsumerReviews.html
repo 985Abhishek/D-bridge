@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Reviews - D-Bridge</title>
+  <style>
+    :root {
+      --primary: #4b7bec;
+      --secondary: #20bf6b;
+      --accent: #fd9644;
+      --light: #f7f9fa;
+      --dark: #2f3640;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--light);
+    }
+
+    .dashboard {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: var(--primary);
+      color: white;
+      padding: 2rem 1rem;
+      width: 250px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 2rem;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: white;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      transition: background 0.2s;
+    }
+
+    .sidebar a:hover, .sidebar a.active {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .content {
+      flex: 1;
+      padding: 2rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .reviews {
+      margin-top: 2rem;
+    }
+
+    .review {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    }
+
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .review-header h3 {
+      margin: 0;
+      color: var(--dark);
+    }
+
+    .stars {
+      color: var(--accent);
+    }
+
+    .review-date {
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    .review-content {
+      margin-bottom: 1rem;
+    }
+
+    .btn {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+
+      .sidebar a {
+        margin-right: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <nav class="sidebar">
+      <h2>Consumer Panel</h2>
+      <a href="ConsumerDashboard.html">Dashboard</a>
+      <a href="ConsumerBookings.html">My Bookings</a>
+      <a href="ConsumerSavedVendors.html">Saved Vendors</a>
+      <a href="ConsumerReviews.html" class="active">Reviews</a>
+      <a href="ConsumerProfile.html">Profile</a>
+      <a href="Login.html">Logout</a>
+    </nav>
+    <main class="content">
+      <div class="header">
+        <h1>My Reviews</h1>
+        <p>Today: <strong id="current-date"></strong></p>
+      </div>
+
+      <div class="reviews">
+        <div class="review">
+          <div class="review-header">
+            <h3>Artisan Crafts</h3>
+            <div class="stars">★★★★★</div>
+          </div>
+          <div class="review-date">Posted on: Apr 15, 2025</div>
+          <div class="review-content">
+            <p>Absolutely loved the custom jewelry I ordered! The craftsmanship is exceptional and the customer service was outstanding. Will definitely order again.</p>
+          </div>
+          <button class="btn">Edit Review</button>
+        </div>
+        
+        <div class="review">
+          <div class="review-header">
+            <h3>Organic Foods Co.</h3>
+            <div class="stars">★★★★☆</div>
+          </div>
+          <div class="review-date">Posted on: Apr 10, 2025</div>
+          <div class="review-content">
+            <p>Great quality produce, always fresh and delivered on time. The only reason for 4 stars is that sometimes items are out of stock.</p>
+          </div>
+          <button class="btn">Edit Review</button>
+        </div>
+        
+        <div class="review">
+          <div class="review-header">
+            <h3>Tech Solutions</h3>
+            <div class="stars">★★★★★</div>
+          </div>
+          <div class="review-date">Posted on: Mar 28, 2025</div>
+          <div class="review-content">
+            <p>Excellent web development service. They understood my requirements perfectly and delivered a website that exceeded my expectations. Highly recommended!</p>
+          </div>
+          <button class="btn">Edit Review</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const today = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('current-date').textContent = today.toLocaleDateString('en-US', options);
+  </script>
+</body>
+</html>

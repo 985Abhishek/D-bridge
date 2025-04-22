@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vendor Orders - D-Bridge</title>
+  <style>
+    :root {
+      --primary: #4b7bec;
+      --secondary: #20bf6b;
+      --accent: #fed330;
+      --dark: #2d3436;
+      --light: #f5f6fa;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--light);
+    }
+
+    .dashboard {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background-color: var(--primary);
+      color: white;
+      padding: 2rem 1rem;
+      width: 250px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+    }
+
+    .sidebar h2 {
+      margin-top: 0;
+      margin-bottom: 2rem;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      display: block;
+      border-radius: 6px;
+      transition: background 0.2s ease;
+    }
+
+    .sidebar a:hover, .sidebar a.active {
+      background-color: rgba(255,255,255,0.2);
+    }
+
+    .content {
+      flex: 1;
+      padding: 2rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      background-color: var(--secondary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: #1aa65c;
+    }
+
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 1rem;
+      }
+
+      .sidebar a {
+        display: inline-block;
+        margin-right: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard">
+    <nav class="sidebar">
+      <h2>Vendor Panel</h2>
+      <a href="VendorDashboard.html">Dashboard</a>
+      <a href="VendorAddProduct.html">Add Product</a>
+      <a href="VendorOrders.html" class="active">Orders</a>
+      <a href="VendorAnalytics.html">Analytics</a>
+      <a href="VendorProfile.html">Profile Settings</a>
+      <a href="Login.html">Logout</a>
+    </nav>
+
+    <main class="content">
+      <div class="header">
+        <h1>Manage Orders</h1>
+        <p>Today: <strong id="current-date"></strong></p>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#ORD-2025-001</td>
+            <td>John Smith</td>
+            <td>Apr 20, 2025</td>
+            <td>$120.00</td>
+            <td>Pending</td>
+            <td><button class="btn">Process</button></td>
+          </tr>
+          <tr>
+            <td>#ORD-2025-002</td>
+            <td>Sarah Johnson</td>
+            <td>Apr 19, 2025</td>
+            <td>$85.50</td>
+            <td>Shipped</td>
+            <td><button class="btn">Track</button></td>
+          </tr>
+          <tr>
+            <td>#ORD-2025-003</td>
+            <td>Michael Brown</td>
+            <td>Apr 18, 2025</td>
+            <td>$210.75</td>
+            <td>Delivered</td>
+            <td><button class="btn">Details</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </div>
+
+  <script>
+    const today = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('current-date').textContent = today.toLocaleDateString('en-US', options);
+  </script>
+</body>
+</html>

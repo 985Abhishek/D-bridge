@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile Settings - D-Bridge</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #4b7bec;
+      --primary-dark: #3867d6;
+      --secondary: #20bf6b;
+      --secondary-dark: #0fb55a;
+      --accent: #fed330;
+      --light: #f5f6fa;
+      --dark: #2d3436;
+      --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--light);
+    }
+
+    .dashboard {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background-color: var(--primary);
+      color: white;
+      padding: 2rem 1rem;
+      width: 250px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar h2 {
+      margin-top: 0;
+      margin-bottom: 2rem;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      border-radius: 6px;
+      transition: var(--transition);
+    }
+
+    .sidebar a i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .sidebar a:hover, .sidebar a.active {
+      background-color: rgba(255,255,255,0.2);
+      transform: translateX(5px);
+    }
+
+    .content {
+      flex: 1;
+      padding: 2rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .profile-container {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: var(--card-shadow);
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background-color: #ddd;
+      margin-right: 2rem;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      border: 4px solid white;
+      position: relative;
+    }
+
+    .profile-pic img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-pic .edit-icon {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background: var(--secondary);
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .profile-pic .edit-icon:hover {
+      background: var(--secondary-dark);
+      transform: scale(1.1);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(75, 123, 236, 0.2);
+    }
+
+    .btn {
+      background-color: var(--secondary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn i {
+      margin-right: 8px;
+    }
+
+    .btn:hover {
+      background-color: var(--secondary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
+    .btn-outline:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 1rem;
+      }
+
+      .sidebar a {
+        display: inline-block;
+        margin-right: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard">
+    <nav class="sidebar">
+      <h2>Vendor Panel</h2>
+      <a href="VendorDashboard.html">Dashboard</a>
+      <a href="VendorAddProduct.html">Add Product</a>
+      <a href="VendorOrders.html">Orders</a>
+      <a href="VendorAnalytics.html">Analytics</a>
+      <a href="VendorProfile.html" class="active">Profile Settings</a>
+      <a href="Login.html">Logout</a>
+    </nav>
+
+    <main class="content">
+      <div class="header">
+        <h1>Profile Settings</h1>
+        <p>Today: <strong id="current-date"></strong></p>
+      </div>
+
+      <div class="profile-container">
+        <div class="profile-header">
+          <div class="profile-pic">
+            <img src="https://via.placeholder.com/100" alt="Profile Picture">
+          </div>
+          <div>
+            <h2>Vendor Name</h2>
+            <p>Member since April 2025</p>
+          </div>
+        </div>
+
+        <form id="profile-form">
+          <div class="form-group">
+            <label for="business-name">Business Name</label>
+            <input type="text" id="business-name" value="My Business" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" value="vendor@example.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" value="(555) 123-4567">
+          </div>
+
+          <div class="form-group">
+            <label for="address">Business Address</label>
+            <textarea id="address" rows="3">123 Business Street, Anytown, CA 12345</textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Business Description</label>
+            <textarea id="description" rows="5">We provide high-quality products and services to our customers.</textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="category">Business Category</label>
+            <select id="category">
+              <option value="retail">Retail</option>
+              <option value="food">Food & Beverage</option>
+              <option value="service">Service Provider</option>
+              <option value="tech">Technology</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn">Save Changes</button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    
+    const today = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('current-date').textContent = today.toLocaleDateString('en-US', options);
+
+    document.getElementById('profile-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Profile updated successfully!');
+    });
+  </script>
+</body>
+</html>
+
+

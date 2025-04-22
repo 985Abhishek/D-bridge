@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Consumer Dashboard - D-Bridge</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #4b7bec;
+      --primary-dark: #3867d6;
+      --secondary: #20bf6b;
+      --secondary-dark: #0fb55a;
+      --accent: #fd9644;
+      --light: #f5f6fa;
+      --dark: #2f3640;
+      --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--light);
+      transition: var(--transition);
+    }
+
+    .dashboard {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: var(--primary);
+      color: white;
+      padding: 2rem 1rem;
+      width: 250px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+    }
+
+    .sidebar h2 {
+      margin-bottom: 2rem;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: white;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+    }
+
+    .sidebar a i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .sidebar a:hover, .sidebar a.active {
+      background-color: var(--primary-dark);
+      transform: translateX(5px);
+    }
+
+    .content {
+      flex: 1;
+      padding: 2rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cards {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: var(--card-shadow);
+      flex: 1 1 200px;
+      transition: var(--transition);
+      border-left: 4px solid var(--secondary);
+      overflow: hidden;
+      position: relative;
+      animation: fadeIn 0.5s ease-out forwards;
+      opacity: 0;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent 50%, rgba(32, 191, 107, 0.05) 100%);
+      z-index: 0;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h3 {
+      margin: 0;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+    }
+
+    .card h3 i {
+      margin-right: 8px;
+      color: var(--secondary);
+    }
+
+    .card p {
+      font-size: 1.8rem;
+      color: var(--secondary);
+      margin: 0.5rem 0 0;
+    }
+
+    .cards .card:nth-child(1) { animation-delay: 0.1s; }
+    .cards .card:nth-child(2) { animation-delay: 0.2s; }
+    .cards .card:nth-child(3) { animation-delay: 0.3s; }
+    .cards .card:nth-child(4) { animation-delay: 0.4s; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+
+      .sidebar a {
+        margin-right: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <nav class="sidebar">
+      <h2>Consumer Panel</h2>
+      <a href="ConsumerDashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a>
+      <a href="ConsumerBookings.html"><i class="fas fa-calendar-check"></i> My Bookings</a>
+      <a href="ConsumerSavedVendors.html"><i class="fas fa-heart"></i> Saved Vendors</a>
+      <a href="ConsumerReviews.html"><i class="fas fa-star"></i> Reviews</a>
+      <a href="ConsumerProfile.html"><i class="fas fa-user"></i> Profile</a>
+      <a href="Login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+    <main class="content">
+      <div class="header">
+        <h1>Welcome, Consumer</h1>
+        <p>Today: <strong id="current-date">April 21, 2025</strong></p>
+      </div>
+
+      <section class="cards">
+        <div class="card">
+          <h3><i class="fas fa-calendar-check"></i> Bookings Made</h3>
+          <p>12</p>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-heart"></i> Vendors Followed</h3>
+          <p>8</p>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-star"></i> Reviews Posted</h3>
+          <p>15</p>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-wallet"></i> Wallet Credits</h3>
+          <p>$230</p>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

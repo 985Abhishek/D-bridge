@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Profile - D-Bridge</title>
+  <style>
+    :root {
+      --primary: #4b7bec;
+      --secondary: #20bf6b;
+      --accent: #fd9644;
+      --light: #f7f9fa;
+      --dark: #2f3640;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--light);
+    }
+
+    .dashboard {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: var(--primary);
+      color: white;
+      padding: 2rem 1rem;
+      width: 250px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 2rem;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: white;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      transition: background 0.2s;
+    }
+
+    .sidebar a:hover, .sidebar a.active {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .content {
+      flex: 1;
+      padding: 2rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .profile-container {
+      background: white;
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: #ddd;
+      margin-right: 1.5rem;
+      overflow: hidden;
+    }
+
+    .profile-pic img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .btn {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background: #18a85c;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+
+      .sidebar a {
+        margin-right: 1rem;
+      }
+
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .profile-pic {
+        margin-right: 0;
+        margin-bottom: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <nav class="sidebar">
+      <h2>Consumer Panel</h2>
+      <a href="ConsumerDashboard.html">Dashboard</a>
+      <a href="ConsumerBookings.html">My Bookings</a>
+      <a href="ConsumerSavedVendors.html">Saved Vendors</a>
+      <a href="ConsumerReviews.html">Reviews</a>
+      <a href="ConsumerProfile.html" class="active">Profile</a>
+      <a href="Login.html">Logout</a>
+    </nav>
+    <main class="content">
+      <div class="header">
+        <h1>My Profile</h1>
+        <p>Today: <strong id="current-date"></strong></p>
+      </div>
+
+      <div class="profile-container">
+        <div class="profile-header">
+          <div class="profile-pic">
+            <img src="https://via.placeholder.com/100" alt="Profile Picture">
+          </div>
+          <div>
+            <h2>John Doe</h2>
+            <p>Member since April 2025</p>
+          </div>
+        </div>
+
+        <form id="profile-form">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" value="John Doe" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" value="john.doe@example.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" value="(555) 123-4567">
+          </div>
+
+          <div class="form-group">
+            <label for="address">Address</label>
+            <textarea id="address" rows="3">123 Main Street, Anytown, CA 12345</textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="preferences">Notification Preferences</label>
+            <select id="preferences">
+              <option value="all">All notifications</option>
+              <option value="important">Important only</option>
+              <option value="none">None</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn">Save Changes</button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const today = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('current-date').textContent = today.toLocaleDateString('en-US', options);
+
+    document.getElementById('profile-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Profile updated successfully!');
+    });
+  </script>
+</body>
+</html>
